@@ -84,8 +84,8 @@ addons:
         targets:
         - query: '*'
           instance_group: log-api
-          deployment: cf
-          network: default
+          deployment: snw-ddobmeier-lab-cf
+          network: cf-core
           domain: bosh
       - domain: metricsgateway.service.cf.internal
         targets:
@@ -464,7 +464,7 @@ instance_groups:
               ca_cert: ((loggregator_tls_agent.ca))
               cert: ((loggregator_tls_agent.certificate))
               key: ((loggregator_tls_agent.private_key))
-          require_consule: false
+          require_consul: false
           cache_ttl: 900s
           cache_cleanup_interval: 6h
           policy_poller_interval: 60s
@@ -475,7 +475,7 @@ instance_groups:
   - name: route_registrar
     release: routing
     consumes:
-      nats: {from: nats, deployment: cf}
+      nats: {from: nats, deployment: snw-ddobmeier-lab-cf}
     properties:
       route_registrar:
         routes:
@@ -505,7 +505,7 @@ instance_groups:
   - name: loggregator_agent
     release: loggregator-agent
     consumes:
-      doppler: {from: doppler, deployment: cf}
+      doppler: {from: doppler, deployment: snw-ddobmeier-lab-cf}
     properties:
       loggregator:
         tls:
